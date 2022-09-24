@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiseTechnologyProject.Data", "RiseTechnologyProject.Data\RiseTechnologyProject.Data.csproj", "{BAAC4DCC-B71F-4C0E-A66C-1837F0E8F837}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiseTechnologyProject.Data", "RiseTechnologyProject.Data\RiseTechnologyProject.Data.csproj", "{BAAC4DCC-B71F-4C0E-A66C-1837F0E8F837}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiseTechnologyProject.DataAccess", "RiseTechnologyProject.DataAccess\RiseTechnologyProject.DataAccess.csproj", "{8E9CFD4E-9875-4A88-A9E5-5C4859D1BA61}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BAAC4DCC-B71F-4C0E-A66C-1837F0E8F837}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAAC4DCC-B71F-4C0E-A66C-1837F0E8F837}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAAC4DCC-B71F-4C0E-A66C-1837F0E8F837}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E9CFD4E-9875-4A88-A9E5-5C4859D1BA61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E9CFD4E-9875-4A88-A9E5-5C4859D1BA61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E9CFD4E-9875-4A88-A9E5-5C4859D1BA61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E9CFD4E-9875-4A88-A9E5-5C4859D1BA61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
