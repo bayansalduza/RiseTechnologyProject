@@ -11,7 +11,7 @@ using RiseTechnologyProject.Data.Context;
 namespace RiseTechnologyProject.Data.Migrations
 {
     [DbContext(typeof(MasterContext))]
-    [Migration("20220925030224_init")]
+    [Migration("20220925031617_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,7 +47,12 @@ namespace RiseTechnologyProject.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("UUID")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UUID");
 
                     b.ToTable("Contact");
                 });
@@ -64,9 +69,6 @@ namespace RiseTechnologyProject.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("ContactID")
-                        .HasColumnType("integer");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -77,20 +79,18 @@ namespace RiseTechnologyProject.Data.Migrations
 
                     b.HasKey("UUID");
 
-                    b.HasIndex("ContactID");
-
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("RiseTechnologyProject.Data.Models.User", b =>
+            modelBuilder.Entity("RiseTechnologyProject.Data.Models.Contact", b =>
                 {
-                    b.HasOne("RiseTechnologyProject.Data.Models.Contact", "Contact")
+                    b.HasOne("RiseTechnologyProject.Data.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("ContactID")
+                        .HasForeignKey("UUID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Contact");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

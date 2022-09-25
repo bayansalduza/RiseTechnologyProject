@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using RiseTechnologyProject.Data.Context;
+using RiseTechnologyProject.Data.Models;
 using RiseTechnologyProject.DataAccess.PostreSqlUnitOfWork;
 
 namespace RiseTechnologyProject.Api.Controllers
@@ -20,6 +22,10 @@ namespace RiseTechnologyProject.Api.Controllers
         {
             using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
             {
+                unitOfWork.GetRepository<User>().Add(new User()
+                {
+                   
+                });
                 return Ok();
             }
         }
