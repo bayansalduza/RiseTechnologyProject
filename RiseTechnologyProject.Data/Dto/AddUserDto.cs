@@ -8,7 +8,6 @@ namespace RiseTechnologyProject.Data.Dto
 {
     public class AddUserDto
     {
-        public int UUID { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public string Company { get; set; }

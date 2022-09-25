@@ -11,7 +11,7 @@ using RiseTechnologyProject.Data.Context;
 namespace RiseTechnologyProject.Data.Migrations
 {
     [DbContext(typeof(MasterContext))]
-    [Migration("20220925031617_init")]
+    [Migration("20220925032515_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
