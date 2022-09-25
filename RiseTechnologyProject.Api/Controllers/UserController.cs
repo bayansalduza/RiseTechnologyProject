@@ -14,26 +14,30 @@ namespace RiseTechnologyProject.Api.Controllers
     public class UserController : ControllerBase
     {
         MasterContext context = new MasterContext();
-        UserController(MasterContext context)
-        {
-            this.context = context;
-        }
 
         [HttpPost("AddUser")]
         public async Task<ActionResult> AddUser(AddUserDto userDto)
         {
             using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
             {
-                unitOfWork.GetRepository<User>().Add(new User()
+                try
                 {
-                    Company = userDto.Company,
-                    LastName = userDto.LastName,
-                    Name = userDto.Name
-                });
-                if (unitOfWork.SaveChanges() == 1)
-                    return Ok();
-                else
-                    return BadRequest("An error occurred while creating the data.");
+                    unitOfWork.GetRepository<User>().Add(new User()
+                    {
+                        Company = userDto.Company,
+                        LastName = userDto.LastName,
+                        Name = userDto.Name
+                    });
+                    if (unitOfWork.SaveChanges() == 1)
+                        return Ok();
+                    else
+                        return BadRequest("An error occurred while creating the data.");
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+
             }
         }
 
@@ -42,11 +46,53 @@ namespace RiseTechnologyProject.Api.Controllers
         {
             using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
             {
-                unitOfWork.GetRepository<User>().Delete(unitOfWork.GetRepository<User>().Get(uUID));
-                if (unitOfWork.SaveChanges() == 1)
-                    return Ok();
-                else
-                    return BadRequest("An error occurred while deleting data.");
+                try
+                {
+                    unitOfWork.GetRepository<User>().Delete(unitOfWork.GetRepository<User>().Get(uUID));
+                    if (unitOfWork.SaveChanges() == 1)
+                        return Ok();
+                    else
+                        return BadRequest("An error occurred while deleting data.");
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+
+            }
+        }
+
+        [HttpGet("GetAllInformation")]
+        public async Task<ActionResult> GetAllInformation(int uUID)
+        {
+            try
+            {
+                using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
+                {
+                    var user = unitOfWork.GetRepository<User>().Get(uUID);
+                    GetAllInformationDto getAll = new GetAllInformationDto()
+                    {
+                        Company = user.Company,
+                        LastName = user.LastName,
+                        Name = user.Name,
+                        ContactDtos = new List<ContactDto>()
+                    };
+                    var contacts = await unitOfWork.GetRepository<Contact>().GetAll(x => x.User.UUID == uUID).ToListAsync();
+                    foreach (var item in contacts)
+                    {
+                        getAll.ContactDtos.Add(new ContactDto()
+                        {
+                            Email = item.Email,
+                            Location = item.Location,
+                            PhoneNumber = item.PhoneNumber
+                        });
+                    }
+                    return Ok(getAll);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }

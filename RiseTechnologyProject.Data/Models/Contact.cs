@@ -14,9 +14,9 @@ namespace RiseTechnologyProject.Data.Models
         public int Id { get; set; }
         [ForeignKey("UUID")]
         public User User { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Email { get; set; }
-        public string Location { get; set; }
-        public string ObjectId { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? Email { get; set; }
+        public string? Location { get; set; }
+        public string? ObjectId { get; set; }
     }
 }
