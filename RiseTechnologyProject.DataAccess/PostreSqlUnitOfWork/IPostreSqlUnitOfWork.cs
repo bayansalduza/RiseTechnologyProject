@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RiseTechnologyProject.DataAccess.PostreSqlUnitOfWork
 {
-    public interface IUnitIPostreSqlUnitOfWorkOfWork : IDisposable
+    public interface IPostreSqlUnitOfWork : IDisposable
     {
         /// <summary>
         /// Provides access to repository via UnitOfWork

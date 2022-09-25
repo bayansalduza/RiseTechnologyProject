@@ -47,7 +47,7 @@ namespace RiseTechnologyProject.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Product");
+                    b.ToTable("Contact");
                 });
 
             modelBuilder.Entity("RiseTechnologyProject.Data.Models.User", b =>
@@ -77,7 +77,7 @@ namespace RiseTechnologyProject.Data.Migrations
 
                     b.HasIndex("ContactID");
 
-                    b.ToTable("Order");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("RiseTechnologyProject.Data.Models.User", b =>

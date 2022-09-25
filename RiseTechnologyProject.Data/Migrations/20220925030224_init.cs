@@ -5,12 +5,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace RiseTechnologyProject.Data.Migrations
 {
-    public partial class addmigration : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Contact",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -22,11 +22,11 @@ namespace RiseTechnologyProject.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.PrimaryKey("PK_Contact", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Order",
+                name: "User",
                 columns: table => new
                 {
                     UUID = table.Column<int>(type: "integer", nullable: false)
@@ -38,28 +38,28 @@ namespace RiseTechnologyProject.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order", x => x.UUID);
+                    table.PrimaryKey("PK_User", x => x.UUID);
                     table.ForeignKey(
-                        name: "FK_Order_Product_ContactID",
+                        name: "FK_User_Contact_ContactID",
                         column: x => x.ContactID,
-                        principalTable: "Product",
+                        principalTable: "Contact",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_ContactID",
-                table: "Order",
+                name: "IX_User_ContactID",
+                table: "User",
                 column: "ContactID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "User");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "Contact");
         }
     }
 }

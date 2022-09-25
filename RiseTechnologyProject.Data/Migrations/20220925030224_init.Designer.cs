@@ -11,8 +11,8 @@ using RiseTechnologyProject.Data.Context;
 namespace RiseTechnologyProject.Data.Migrations
 {
     [DbContext(typeof(MasterContext))]
-    [Migration("20220924221937_add-migration")]
-    partial class addmigration
+    [Migration("20220925030224_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,7 +49,7 @@ namespace RiseTechnologyProject.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Product");
+                    b.ToTable("Contact");
                 });
 
             modelBuilder.Entity("RiseTechnologyProject.Data.Models.User", b =>
@@ -79,7 +79,7 @@ namespace RiseTechnologyProject.Data.Migrations
 
                     b.HasIndex("ContactID");
 
-                    b.ToTable("Order");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("RiseTechnologyProject.Data.Models.User", b =>

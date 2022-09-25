@@ -31,7 +31,7 @@ namespace RiseTechnologyProject.Data.Context
             }
 
         }
-        public DbSet<User> Order { get; set; }
-        public DbSet<Contact> Product { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<Contact> Contact { get; set; }
     }
 }

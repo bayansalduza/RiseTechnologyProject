@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RiseTechnologyProject.DataAccess.PostreSqlUnitOfWork
 {
-    public class PostreSqlUnitOfWork : IUnitIPostreSqlUnitOfWorkOfWork
+    public class PostreSqlUnitOfWork : IPostreSqlUnitOfWork
     {
         private DbContext Context;
         public PostreSqlUnitOfWork(DbContext _context)
