@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using RiseTechnologyProject.Consumer.Properties;
 using RiseTechnologyProject.Data.Context;
 using RiseTechnologyProject.Data.Dto;
 using RiseTechnologyProject.Data.Models;
@@ -13,11 +14,11 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 try
 {
-    var factory = new ConnectionFactory() { HostName = "localhost" };
+    var factory = new ConnectionFactory() { HostName = Resources.RabbitMQConnectionString };
     using (var connection = factory.CreateConnection())
     using (var channel = connection.CreateModel())
     {
-        channel.QueueDeclare(queue: "ReportQueue",
+        channel.QueueDeclare(queue: Resources.RabbitMQQueueName,
             durable: false,
             exclusive: false);
 
@@ -52,7 +53,7 @@ try
                 unitOfWork.SaveChangesAsync();
             }
         };
-        channel.BasicConsume(queue: "ReportQueue", autoAck: true, consumer: consumer);
+        channel.BasicConsume(queue: Resources.RabbitMQQueueName, autoAck: true, consumer: consumer);
         Console.ReadKey();
     }
 }

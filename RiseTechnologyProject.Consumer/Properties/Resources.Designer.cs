@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RiseTechnologyProject.DataAccess.Properties {
+namespace RiseTechnologyProject.Consumer.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace RiseTechnologyProject.DataAccess.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("RiseTechnologyProject.DataAccess.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("RiseTechnologyProject.Consumer.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,24 +57,6 @@ namespace RiseTechnologyProject.DataAccess.Properties {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to RiseTechnology.
-        /// </summary>
-        internal static string MONGO_DATABASE {
-            get {
-                return ResourceManager.GetString("MONGO_DATABASE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to mongodb://localhost:27017.
-        /// </summary>
-        internal static string MONGO_URI {
-            get {
-                return ResourceManager.GetString("MONGO_URI", resourceCulture);
             }
         }
         
