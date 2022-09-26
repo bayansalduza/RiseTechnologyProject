@@ -25,6 +25,7 @@ namespace RiseTechnologyProject.Data.Context
         {
             modelBuilder.Entity<User>();
             modelBuilder.Entity<Contact>();
+            modelBuilder.Entity<Report>();
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
@@ -33,5 +34,6 @@ namespace RiseTechnologyProject.Data.Context
         }
         public DbSet<User> User { get; set; }
         public DbSet<Contact> Contact { get; set; }
+        public DbSet<Report> Report { get; set; }
     }
 }

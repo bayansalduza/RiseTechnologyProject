@@ -61,7 +61,7 @@ namespace RiseTechnologyProject.Data.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User ID=postgres;Password=123456;Host=localhost;Port=5432;Database=RiseTechnology;.
+        ///   Looks up a localized string similar to User ID=postgres;Password=123456;Host=localhost;Port=5432;Database=RiseTechnology;Pooling=true;Connection Lifetime=0;.
         /// </summary>
         internal static string POSTRESQL_CONNECTION_STRING {
             get {

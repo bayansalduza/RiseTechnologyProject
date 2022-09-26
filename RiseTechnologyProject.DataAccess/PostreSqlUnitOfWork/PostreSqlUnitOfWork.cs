@@ -29,5 +29,10 @@ namespace RiseTechnologyProject.DataAccess.PostreSqlUnitOfWork
         {
             return Context.SaveChanges();
         }
+
+        public async void SaveChangesAsync()
+        {
+            await Context.SaveChangesAsync();
+        }
     }
 }

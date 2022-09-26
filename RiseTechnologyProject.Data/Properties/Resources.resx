@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="POSTRESQL_CONNECTION_STRING" xml:space="preserve">
-    <value>User ID=postgres;Password=123456;Host=localhost;Port=5432;Database=RiseTechnology;</value>
+    <value>User ID=postgres;Password=123456;Host=localhost;Port=5432;Database=RiseTechnology;Pooling=true;Connection Lifetime=0;</value>
   </data>
 </root>
