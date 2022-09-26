@@ -98,48 +98,5 @@ namespace RiseTechnologyProject.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        //[HttpGet("GetAllReports")]
-        //public async Task<ActionResult> GetAllReports(int uUID)
-        //{
-        //    using (MongoDbRepository<>)
-        //    {
-
-        //    }
-        //}
-
-        [HttpGet("TakeReports")]
-        public async Task<ActionResult> TakeReports(int uUID)
-        {
-            using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
-            {
-                if (unitOfWork.GetRepository<Report>().Get(uUID) == null)
-                {
-                    unitOfWork.GetRepository<Report>().Add(new Report()
-                    {
-                        DateTime = DateTime.Now,
-                        UUID = uUID,
-                        IsOkey = false
-                    });
-                    unitOfWork.SaveChangesAsync();
-                    new RabbitMQExtensions().AddToQueue(uUID);
-                    return Ok("Report request created, in process");
-                }
-                else if (unitOfWork.GetRepository<Report>().Get(uUID).IsOkey == false)
-                {
-                    unitOfWork.GetRepository<Report>().Add(new Report()
-                    {
-                        DateTime = DateTime.Now,
-                        UUID = uUID,
-                        IsOkey = false
-                    });
-                    unitOfWork.SaveChangesAsync();
-                    new RabbitMQExtensions().AddToQueue(uUID);
-                    return Ok("Report request created, in process");
-                }
-                else
-                    return Ok(unitOfWork.GetRepository<Report>().Get(uUID));
-            }
-        }
     }
 }
