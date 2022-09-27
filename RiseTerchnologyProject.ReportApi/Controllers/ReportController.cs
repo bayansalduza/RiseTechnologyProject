@@ -17,13 +17,13 @@ namespace RiseTechnologyProject.ReportApi.Controllers
         MasterContext context = new MasterContext();
 
         [HttpGet("TakeReports")]
-        public async Task<ActionResult> TakeReports(int id)
+        public async Task<ActionResult> TakeReports(int id,bool newReport = false)
         {
             try
             {
                 using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
                 {
-                    if (unitOfWork.GetRepository<Report>().Get(x=> x.UUID == id) == null)
+                    if (unitOfWork.GetRepository<Report>().Get(x=> x.UUID == id) == null && newReport == true)
                     {                                                    
                         unitOfWork.GetRepository<Report>().Add(new Report()
                         {
