@@ -12,7 +12,7 @@ using RiseTechnologyProject.Data.Context;
 namespace RiseTechnologyProject.Data.Migrations
 {
     [DbContext(typeof(MasterContext))]
-    [Migration("20220927103838_init")]
+    [Migration("20220927111231_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,6 +61,10 @@ namespace RiseTechnologyProject.Data.Migrations
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Explanation")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsOkey")
                         .HasColumnType("boolean");

@@ -60,6 +60,10 @@ namespace RiseTechnologyProject.Data.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Explanation")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsOkey")
                         .HasColumnType("boolean");
 

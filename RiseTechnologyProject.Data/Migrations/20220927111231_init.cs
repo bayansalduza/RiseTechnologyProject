@@ -18,7 +18,8 @@ namespace RiseTechnologyProject.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UUID = table.Column<int>(type: "integer", nullable: false),
                     DateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    IsOkey = table.Column<bool>(type: "boolean", nullable: false)
+                    IsOkey = table.Column<bool>(type: "boolean", nullable: false),
+                    Explanation = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
