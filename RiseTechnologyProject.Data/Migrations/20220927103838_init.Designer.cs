@@ -12,7 +12,7 @@ using RiseTechnologyProject.Data.Context;
 namespace RiseTechnologyProject.Data.Migrations
 {
     [DbContext(typeof(MasterContext))]
-    [Migration("20220926021756_init")]
+    [Migration("20220927103838_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,9 +36,6 @@ namespace RiseTechnologyProject.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Location")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ObjectId")
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")

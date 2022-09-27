@@ -8,7 +8,7 @@ using RiseTechnologyProject.DataAccess.PostreSqlUnitOfWork;
 using RiseTechnologyProject.DataAccess.RabbitMQExtensions;
 using System.Xml.Linq;
 
-namespace RiseTechnologyProject.Api.Controllers
+namespace RiseTechnologyProject.ReportApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -36,9 +36,6 @@ namespace RiseTechnologyProject.Data.Migrations
                     b.Property<string>("Location")
                         .HasColumnType("text");
 
-                    b.Property<string>("ObjectId")
-                        .HasColumnType("text");
-
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 

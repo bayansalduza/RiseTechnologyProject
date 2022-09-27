@@ -22,6 +22,12 @@ namespace RiseTechnologyProject.DataAccess.PostreSqlRepository
         void Delete(T entity);
 
         /// <summary>
+        /// It performs deletion according to the given condition.
+        /// </summary>
+        /// <param name="entity"></param>
+        void Delete(Expression<Func<T, bool>> condition);
+
+        /// <summary>
         /// Gets id and returns an entity
         /// </summary>
         /// <param name="id">Geriye dönülmesini istediğimiz id paramatresi</param>

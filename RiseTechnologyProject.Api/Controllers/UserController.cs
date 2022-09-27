@@ -10,7 +10,7 @@ using RiseTechnologyProject.DataAccess.PostreSqlUnitOfWork;
 using RiseTechnologyProject.DataAccess.RabbitMQExtensions;
 using System.Diagnostics;
 
-namespace RiseTechnologyProject.Api.Controllers
+namespace RiseTechnologyProject.UserApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -45,17 +45,16 @@ namespace RiseTechnologyProject.Api.Controllers
         }
 
         [HttpDelete("DeleteUser")]
-        public async Task<ActionResult> DeleteUser(int uUID)
+        public async Task<ActionResult> DeleteUser(int id)
         {
             using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
             {
                 try
                 {
-                    unitOfWork.GetRepository<User>().Delete(unitOfWork.GetRepository<User>().Get(uUID));
-                    if (unitOfWork.SaveChanges() == 1)
-                        return Ok();
-                    else
-                        return BadRequest("An error occurred while deleting data.");
+                    unitOfWork.GetRepository<Contact>().Delete(x => x.User.UUID == id);
+                    unitOfWork.GetRepository<User>().Delete(unitOfWork.GetRepository<User>().Get(id));
+                    unitOfWork.SaveChanges();
+                    return Ok();
                 }
                 catch (Exception ex)
                 {
@@ -66,13 +65,13 @@ namespace RiseTechnologyProject.Api.Controllers
         }
 
         [HttpGet("GetAllInformation")]
-        public async Task<ActionResult> GetAllInformation(int uUID)
+        public async Task<ActionResult> GetAllInformation(int id)
         {
             try
             {
                 using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
                 {
-                    var user = unitOfWork.GetRepository<User>().Get(uUID);
+                    var user = unitOfWork.GetRepository<User>().Get(id);
                     GetAllInformationDto getAll = new GetAllInformationDto()
                     {
                         Company = user.Company,
@@ -80,7 +79,7 @@ namespace RiseTechnologyProject.Api.Controllers
                         Name = user.Name,
                         ContactDtos = new List<ContactDto>()
                     };
-                    var contacts = await unitOfWork.GetRepository<Contact>().GetAll(x => x.User.UUID == uUID).ToListAsync();
+                    var contacts = await unitOfWork.GetRepository<Contact>().GetAll(x => x.User.UUID == id).ToListAsync();
                     foreach (var item in contacts)
                     {
                         getAll.ContactDtos.Add(new ContactDto()

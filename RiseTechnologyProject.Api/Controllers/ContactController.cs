@@ -5,7 +5,7 @@ using RiseTechnologyProject.Data.Dto;
 using RiseTechnologyProject.Data.Models;
 using RiseTechnologyProject.DataAccess.PostreSqlUnitOfWork;
 
-namespace RiseTechnologyProject.Api.Controllers
+namespace RiseTechnologyProject.UserApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -64,13 +64,28 @@ namespace RiseTechnologyProject.Api.Controllers
         }
 
         [HttpGet("GetAllContact")]
-        public async Task<ActionResult> GetAllAccount(int uUID)
+        public async Task<ActionResult> GetAllAccount(int id)
         {
             try
             {
                 using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
                 {
-                    return Ok(unitOfWork.GetRepository<Contact>().GetAll(x => x.User.UUID == uUID));
+                    List<ContactDto> contactDtos = new List<ContactDto>();
+                    var contacts = unitOfWork.GetRepository<Contact>().GetAll(x => x.User.UUID == id);
+                    Parallel.ForEach(contacts, x =>
+                    {
+                        contactDtos.Add(new ContactDto()
+                        {
+                            Email = x.Email,
+                            Location = x.Location,
+                            PhoneNumber = x.PhoneNumber
+                        });
+                    });
+                    return Ok(new GetAllContactDto()
+                    {
+                        Contacts = contactDtos,
+                        UUID = id
+                    });
                 }
             }
             catch (Exception ex)

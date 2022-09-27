@@ -28,6 +28,12 @@ namespace RiseTechnologyProject.DataAccess.PostreSqlRepository
         {
             DbSet.Remove(entity);
         }
+        public void Delete(Expression<Func<T, bool>> condition)
+        {
+            IQueryable<T> iQueryable = DbSet
+               .Where(condition);
+            DbSet.RemoveRange(iQueryable);
+        }
 
         public T Get(int id)
         {

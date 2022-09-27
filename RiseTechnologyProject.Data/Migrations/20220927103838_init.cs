@@ -49,8 +49,7 @@ namespace RiseTechnologyProject.Data.Migrations
                     UUID = table.Column<int>(type: "integer", nullable: false),
                     PhoneNumber = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
-                    Location = table.Column<string>(type: "text", nullable: true),
-                    ObjectId = table.Column<string>(type: "text", nullable: true)
+                    Location = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
