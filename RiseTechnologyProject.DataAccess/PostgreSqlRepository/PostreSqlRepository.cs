@@ -6,14 +6,14 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RiseTechnologyProject.DataAccess.PostreSqlRepository
+namespace RiseTechnologyProject.DataAccess.PostgreSqlRepository
 {
-    public class PostreSqlRepository<T> : IPostreSqlRepository<T> where T : class
+    public class PostgreSqlRepository<T> : IPostgreSqlRepository<T> where T : class
     {
         private readonly DbContext DbContext;
         private readonly DbSet<T> DbSet;
 
-        public PostreSqlRepository(DbContext dbContext)
+        public PostgreSqlRepository(DbContext dbContext)
         {
             DbContext = dbContext;
             DbSet = dbContext.Set<T>();

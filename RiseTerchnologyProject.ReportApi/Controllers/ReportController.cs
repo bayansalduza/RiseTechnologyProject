@@ -4,7 +4,7 @@ using RiseTechnologyProject.Data.Context;
 using RiseTechnologyProject.Data.Dto;
 using RiseTechnologyProject.Data.Models;
 using RiseTechnologyProject.DataAccess.MongoDbRepository;
-using RiseTechnologyProject.DataAccess.PostreSqlUnitOfWork;
+using RiseTechnologyProject.DataAccess.PostgreSqlUnitOfWork;
 using RiseTechnologyProject.DataAccess.RabbitMQExtensions;
 using System.Xml.Linq;
 
@@ -17,38 +17,43 @@ namespace RiseTechnologyProject.ReportApi.Controllers
         MasterContext context = new MasterContext();
 
         [HttpGet("TakeReports")]
-        public async Task<ActionResult> TakeReports(int id,bool newReport = false)
+        public async Task<ActionResult> TakeReports(int id, bool newReport = false)
         {
             try
             {
-                using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
+                using (PostgreSqlUnitOfWork unitOfWork = new PostgreSqlUnitOfWork(context))
                 {
-                    if (unitOfWork.GetRepository<Report>().Get(x=> x.UUID == id) == null && newReport == true)
-                    {                                                    
-                        unitOfWork.GetRepository<Report>().Add(new Report()
-                        {
-                            DateTime = DateTime.Now,
-                            UUID = id,
-                            IsOkey = false
-                        });
-                        unitOfWork.SaveChangesAsync();
-                        new RabbitMQExtensions().AddToQueue(id);
-                        return Ok("Report request created, in process");
-                    }
-                    else if (unitOfWork.GetRepository<Report>().Get(x=> x.UUID == id).IsOkey == false)
+                    if (unitOfWork.GetRepository<User>().Get(x => x.UUID == id) != null)
                     {
-                        unitOfWork.GetRepository<Report>().Add(new Report()
+                        if (unitOfWork.GetRepository<Report>().Get(x => x.UUID == id) == null)
                         {
-                            DateTime = DateTime.Now,
-                            UUID = id,
-                            IsOkey = false
-                        });
-                        unitOfWork.SaveChangesAsync();
-                        new RabbitMQExtensions().AddToQueue(id);
-                        return Ok("Report request created, in process");
+                            unitOfWork.GetRepository<Report>().Add(new Report()
+                            {
+                                DateTime = DateTime.Now,
+                                UUID = id,
+                                IsOkey = false
+                            });
+                            unitOfWork.SaveChangesAsync();
+                            new RabbitMQExtensions().AddToQueue(id);
+                            return Ok("Report request created, in process");
+                        }
+                        else if (unitOfWork.GetRepository<Report>().Get(x => x.UUID == id).IsOkey == false && newReport == true)
+                        {
+                            unitOfWork.GetRepository<Report>().Add(new Report()
+                            {
+                                DateTime = DateTime.Now,
+                                UUID = id,
+                                IsOkey = false
+                            });
+                            unitOfWork.SaveChangesAsync();
+                            new RabbitMQExtensions().AddToQueue(id);
+                            return Ok("Report request created, in process");
+                        }
+                        else
+                            return Ok(unitOfWork.GetRepository<Report>().Get(x => x.UUID == id));
                     }
                     else
-                        return Ok(unitOfWork.GetRepository<Report>().Get(x => x.UUID == id));
+                        return NoContent();
                 }
             }
             catch (Exception ex)
@@ -79,7 +84,7 @@ namespace RiseTechnologyProject.ReportApi.Controllers
         {
             try
             {
-                using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
+                using (PostgreSqlUnitOfWork unitOfWork = new PostgreSqlUnitOfWork(context))
                 {
                     return Ok(unitOfWork.GetRepository<Report>().GetAll(x => x.UUID == id).OrderByDescending(x => x.DateTime).FirstOrDefault());
                 }

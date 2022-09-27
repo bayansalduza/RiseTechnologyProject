@@ -6,7 +6,7 @@ using RiseTechnologyProject.Data.Context;
 using RiseTechnologyProject.Data.Dto;
 using RiseTechnologyProject.Data.Models;
 using RiseTechnologyProject.DataAccess.MongoDbRepository;
-using RiseTechnologyProject.DataAccess.PostreSqlUnitOfWork;
+using RiseTechnologyProject.DataAccess.PostgreSqlUnitOfWork;
 using RiseTechnologyProject.DataAccess.RabbitMQExtensions;
 using System.Diagnostics;
 
@@ -21,7 +21,7 @@ namespace RiseTechnologyProject.UserApi.Controllers
         [HttpPost("AddUser")]
         public async Task<ActionResult> AddUser(AddUserDto userDto)
         {
-            using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
+            using (PostgreSqlUnitOfWork unitOfWork = new PostgreSqlUnitOfWork(context))
             {
                 try
                 {
@@ -47,7 +47,7 @@ namespace RiseTechnologyProject.UserApi.Controllers
         [HttpDelete("DeleteUser")]
         public async Task<ActionResult> DeleteUser(int id)
         {
-            using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
+            using (PostgreSqlUnitOfWork unitOfWork = new PostgreSqlUnitOfWork(context))
             {
                 try
                 {
@@ -69,7 +69,7 @@ namespace RiseTechnologyProject.UserApi.Controllers
         {
             try
             {
-                using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
+                using (PostgreSqlUnitOfWork unitOfWork = new PostgreSqlUnitOfWork(context))
                 {
                     var user = unitOfWork.GetRepository<User>().Get(id);
                     if (user == null)

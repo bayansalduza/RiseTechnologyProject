@@ -6,7 +6,7 @@ using RiseTechnologyProject.Data.Context;
 using RiseTechnologyProject.Data.Dto;
 using RiseTechnologyProject.Data.Models;
 using RiseTechnologyProject.DataAccess.MongoDbRepository;
-using RiseTechnologyProject.DataAccess.PostreSqlUnitOfWork;
+using RiseTechnologyProject.DataAccess.PostgreSqlUnitOfWork;
 using System.Text;
 
 
@@ -26,7 +26,7 @@ try
         consumer.Received += (model, eventArgs) =>
         {
             var uUID = Convert.ToInt32(Encoding.UTF8.GetString(eventArgs.Body.Span));
-            using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(new MasterContext()))
+            using (PostgreSqlUnitOfWork unitOfWork = new PostgreSqlUnitOfWork(new MasterContext()))
             {
                 var contactsLocation = unitOfWork.GetRepository<Contact>().GetAll(x => x.User.UUID == uUID).ToList();
                 if (contactsLocation.Count > 0)

@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RiseTechnologyProject.DataAccess.PostreSqlRepository
+namespace RiseTechnologyProject.DataAccess.PostgreSqlRepository
 {
-    public interface IPostreSqlRepository<T> where T : class
+    public interface IPostgreSqlRepository<T> where T : class
     {
         /// <summary>
         /// Add method

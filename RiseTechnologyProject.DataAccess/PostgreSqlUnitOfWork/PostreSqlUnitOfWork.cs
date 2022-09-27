@@ -1,17 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RiseTechnologyProject.DataAccess.PostreSqlRepository;
+using RiseTechnologyProject.DataAccess.PostgreSqlRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RiseTechnologyProject.DataAccess.PostreSqlUnitOfWork
+namespace RiseTechnologyProject.DataAccess.PostgreSqlUnitOfWork
 {
-    public class PostreSqlUnitOfWork : IPostreSqlUnitOfWork
+    public class PostgreSqlUnitOfWork : IPostgreSqlUnitOfWork
     {
         private DbContext Context;
-        public PostreSqlUnitOfWork(DbContext _context)
+        public PostgreSqlUnitOfWork(DbContext _context)
         {
             Context = _context;
         }
@@ -20,9 +20,9 @@ namespace RiseTechnologyProject.DataAccess.PostreSqlUnitOfWork
         {
         }
 
-        public IPostreSqlRepository<T> GetRepository<T>() where T : class
+        public IPostgreSqlRepository<T> GetRepository<T>() where T : class
         {
-            return new PostreSqlRepository<T>(Context);
+            return new PostgreSqlRepository<T>(Context);
         }
 
         public int SaveChanges()
@@ -33,6 +33,11 @@ namespace RiseTechnologyProject.DataAccess.PostreSqlUnitOfWork
         public async void SaveChangesAsync()
         {
             await Context.SaveChangesAsync();
+        }
+
+        ~PostgreSqlUnitOfWork()
+        {
+            Context.Dispose();
         }
     }
 }

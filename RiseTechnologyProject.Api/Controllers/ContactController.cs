@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using RiseTechnologyProject.Data.Context;
 using RiseTechnologyProject.Data.Dto;
 using RiseTechnologyProject.Data.Models;
-using RiseTechnologyProject.DataAccess.PostreSqlUnitOfWork;
+using RiseTechnologyProject.DataAccess.PostgreSqlUnitOfWork;
 
 namespace RiseTechnologyProject.UserApi.Controllers
 {
@@ -16,7 +16,7 @@ namespace RiseTechnologyProject.UserApi.Controllers
         [HttpPost("AddContact")]
         public async Task<ActionResult> AddContact(AddContactDto addContactDto)
         {
-            using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
+            using (PostgreSqlUnitOfWork unitOfWork = new PostgreSqlUnitOfWork(context))
             {
                 try
                 {
@@ -48,7 +48,7 @@ namespace RiseTechnologyProject.UserApi.Controllers
         {
             try
             {
-                using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
+                using (PostgreSqlUnitOfWork unitOfWork = new PostgreSqlUnitOfWork(context))
                 {
                     var contact = unitOfWork.GetRepository<Contact>().Get(id);
                     if (contact != null)
@@ -72,7 +72,7 @@ namespace RiseTechnologyProject.UserApi.Controllers
         {
             try
             {
-                using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
+                using (PostgreSqlUnitOfWork unitOfWork = new PostgreSqlUnitOfWork(context))
                 {
                     List<ContactDto> contactDtos = new List<ContactDto>();
                     var contacts = unitOfWork.GetRepository<Contact>().GetAll(x => x.User.UUID == id);
