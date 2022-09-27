@@ -29,28 +29,40 @@ try
             using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(new MasterContext()))
             {
                 var contactsLocation = unitOfWork.GetRepository<Contact>().GetAll(x => x.User.UUID == uUID).ToList();
-                var contactsLocationGB = contactsLocation.GroupBy(x => x.Location).ToList();
-                using (MongoDbRepository<ReportsDto> mongoRepo = new MongoDbRepository<ReportsDto>())
+                if (contactsLocation.Count > 0)
                 {
-                    mongoRepo.Delete(x => x.UUID == uUID);
-                    foreach (var item in contactsLocationGB)
+                    var contactsLocationGB = contactsLocation.GroupBy(x => x.Location).ToList();
+                    using (MongoDbRepository<ReportsDto> mongoRepo = new MongoDbRepository<ReportsDto>())
                     {
-                        var location = item.Where(x => x.Location == item.Key).ToList();
-                        var phoneNumber = item.Where(x=> x.PhoneNumber != null).ToList();
-                        mongoRepo.Add(new ReportsDto()
+                        mongoRepo.Delete(x => x.UUID == uUID);
+                        foreach (var item in contactsLocationGB)
                         {
-                            Location = item.Key,
-                            RegisteredLocationCount = location.Count(),
-                            RegisteredPhoneNumberCount = phoneNumber.Count(),
-                            UUID = uUID
-                        });
+                            var location = item.Where(x => x.Location == item.Key).ToList();
+                            var phoneNumber = item.Where(x => x.PhoneNumber != null).ToList();
+                            mongoRepo.Add(new ReportsDto()
+                            {
+                                Location = item.Key,
+                                RegisteredLocationCount = location.Count(),
+                                RegisteredPhoneNumberCount = phoneNumber.Count(),
+                                UUID = uUID
+                            });
+                        }
                     }
+                    var report = unitOfWork.GetRepository<Report>().Get(x => x.UUID == uUID);
+                    report.IsOkey = true;
+                    report.DateTime = DateTime.Now;
+                    unitOfWork.GetRepository<Report>().Update(report);
+                    unitOfWork.SaveChangesAsync();
                 }
-                var report = unitOfWork.GetRepository<Report>().Get(x=> x.UUID == uUID);
-                report.IsOkey = true;
-                report.DateTime = DateTime.Now;
-                unitOfWork.GetRepository<Report>().Update(report);
-                unitOfWork.SaveChangesAsync();
+                else
+                {
+                    var report = unitOfWork.GetRepository<Report>().Get(x => x.UUID == uUID);
+                    report.IsOkey = false;
+                    report.DateTime = DateTime.Now;
+                    report.Explanation = "Not found any contact";
+                    unitOfWork.GetRepository<Report>().Update(report);
+                    unitOfWork.SaveChangesAsync();
+                }
             }
         };
         channel.BasicConsume(queue: Resources.RabbitMQQueueName, autoAck: true, consumer: consumer);

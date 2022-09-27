@@ -50,7 +50,11 @@ namespace RiseTechnologyProject.UserApi.Controllers
             {
                 using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
                 {
-                    unitOfWork.GetRepository<Contact>().Delete(unitOfWork.GetRepository<Contact>().Get(id));
+                    var contact = unitOfWork.GetRepository<Contact>().Get(id);
+                    if (contact != null)
+                        unitOfWork.GetRepository<Contact>().Delete(contact);
+                    else
+                        return NoContent();
                     if (unitOfWork.SaveChanges() == 1)
                         return Ok();
                     else
@@ -81,11 +85,14 @@ namespace RiseTechnologyProject.UserApi.Controllers
                             PhoneNumber = x.PhoneNumber
                         });
                     });
-                    return Ok(new GetAllContactDto()
-                    {
-                        Contacts = contactDtos,
-                        UUID = id
-                    });
+                    if (contactDtos.Count > 0)
+                        return Ok(new GetAllContactDto()
+                        {
+                            Contacts = contactDtos,
+                            UUID = id
+                        });
+                    else
+                        return NoContent();
                 }
             }
             catch (Exception ex)

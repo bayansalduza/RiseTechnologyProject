@@ -17,38 +17,38 @@ namespace RiseTechnologyProject.ReportApi.Controllers
         MasterContext context = new MasterContext();
 
         [HttpGet("TakeReports")]
-        public async Task<ActionResult> TakeReports(int uUID)
+        public async Task<ActionResult> TakeReports(int id)
         {
             try
             {
                 using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
                 {
-                    if (unitOfWork.GetRepository<Report>().Get(x=> x.UUID == uUID) == null)
+                    if (unitOfWork.GetRepository<Report>().Get(x=> x.UUID == id) == null)
                     {                                                    
                         unitOfWork.GetRepository<Report>().Add(new Report()
                         {
                             DateTime = DateTime.Now,
-                            UUID = uUID,
+                            UUID = id,
                             IsOkey = false
                         });
                         unitOfWork.SaveChangesAsync();
-                        new RabbitMQExtensions().AddToQueue(uUID);
+                        new RabbitMQExtensions().AddToQueue(id);
                         return Ok("Report request created, in process");
                     }
-                    else if (unitOfWork.GetRepository<Report>().Get(x=> x.UUID == uUID).IsOkey == false)
+                    else if (unitOfWork.GetRepository<Report>().Get(x=> x.UUID == id).IsOkey == false)
                     {
                         unitOfWork.GetRepository<Report>().Add(new Report()
                         {
                             DateTime = DateTime.Now,
-                            UUID = uUID,
+                            UUID = id,
                             IsOkey = false
                         });
                         unitOfWork.SaveChangesAsync();
-                        new RabbitMQExtensions().AddToQueue(uUID);
+                        new RabbitMQExtensions().AddToQueue(id);
                         return Ok("Report request created, in process");
                     }
                     else
-                        return Ok(unitOfWork.GetRepository<Report>().Get(x => x.UUID == uUID));
+                        return Ok(unitOfWork.GetRepository<Report>().Get(x => x.UUID == id));
                 }
             }
             catch (Exception ex)
@@ -58,13 +58,13 @@ namespace RiseTechnologyProject.ReportApi.Controllers
         }
 
         [HttpGet("GetAllReports")]
-        public async Task<ActionResult> GetAllReports(int uUID)
+        public async Task<ActionResult> GetAllReports(int id)
         {
             try
             {
                 using (MongoDbRepository<ReportsDto> mongoRepo = new MongoDbRepository<ReportsDto>())
                 {
-                    var a = mongoRepo.GetAll(x => x.UUID == uUID).ToList();
+                    var a = mongoRepo.GetAll(x => x.UUID == id).ToList();
                     return Ok(a);
                 }
             }
@@ -75,13 +75,13 @@ namespace RiseTechnologyProject.ReportApi.Controllers
         }
 
         [HttpGet("GetReportStatus")]
-        public async Task<ActionResult> GetReportStatus(int uUID)
+        public async Task<ActionResult> GetReportStatus(int id)
         {
             try
             {
                 using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
                 {
-                    return Ok(unitOfWork.GetRepository<Report>().GetAll(x => x.UUID == uUID).OrderByDescending(x => x.DateTime).FirstOrDefault());
+                    return Ok(unitOfWork.GetRepository<Report>().GetAll(x => x.UUID == id).OrderByDescending(x => x.DateTime).FirstOrDefault());
                 }
             }
             catch (Exception ex)

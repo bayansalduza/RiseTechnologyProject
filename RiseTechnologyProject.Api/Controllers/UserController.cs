@@ -72,6 +72,8 @@ namespace RiseTechnologyProject.UserApi.Controllers
                 using (PostreSqlUnitOfWork unitOfWork = new PostreSqlUnitOfWork(context))
                 {
                     var user = unitOfWork.GetRepository<User>().Get(id);
+                    if (user == null)
+                        return NoContent();
                     GetAllInformationDto getAll = new GetAllInformationDto()
                     {
                         Company = user.Company,

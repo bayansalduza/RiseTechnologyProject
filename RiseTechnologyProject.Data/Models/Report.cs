@@ -14,5 +14,6 @@ namespace RiseTechnologyProject.Data.Models
         public int UUID { get; set; }
         public DateTime DateTime { get; set; }
         public bool IsOkey { get; set; }
+        public string Explanation { get; set; }
     }
 }
