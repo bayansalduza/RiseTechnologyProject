@@ -43,7 +43,7 @@ namespace RiseTechnologyProject.ReportApi.Controllers
                             {
                                 DateTime = DateTime.Now,
                                 UUID = id,
-                                IsOkey = false
+                                IsOkey = true
                             });
                             unitOfWork.SaveChangesAsync();
                             new RabbitMQExtensions().AddToQueue(id);
